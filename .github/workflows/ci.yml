@@ -48,9 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: send custom message
-    - uses: haishanh/actions-telegram-notification@v1
-      if: ${{ always() }}
+      uses: appleboy/telegram-action@master
       with:
-        notification-token: ${{ secrets.TELEGRAM_TOKEN }}
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
         job-status: ${{ job.status }}
-
