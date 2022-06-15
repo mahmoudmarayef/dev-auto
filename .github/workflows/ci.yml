@@ -57,5 +57,5 @@ jobs:
         uses: yamaks2306/telegram-notification@main
         if: always()
         with:
-          to: ${{ secrets.TELEGRAM_TO }}
+          chat_id: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
