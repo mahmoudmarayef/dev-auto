@@ -43,3 +43,19 @@ jobs:
 
       - name: Build
         run: g++ hello.cpp -o app
+      
+      - name: Success alert
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TEXT: "✅ <b>Deployed</b>%0A${{ github.event.workflow_run.head_commit.message }} <i>(${{ github.event.workflow_run.head_branch }})</i>"
+          TELEGRAM_TO: ${{ secrets.TELEGRAM_TELEGRAM_TO }}
+        run: |
+          curl -X GET "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage?chat_id=$TELEGRAM_TO&text=$TEXT"
+
+      - name: Failure alert
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TEXT: "🚨🚨🚨 <b>Deployment Failed</b>%0A${{ github.event.workflow_run.head_commit.message }} <i>(${{ github.event.workflow_run.head_branch }})</i>❌"
+          TELEGRAM_TO: ${{ secrets.TELEGRAM_TELEGRAM_TO }}
+        run: |
+          curl -X GET "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage?chat_id=$TELEGRAM_TO&text=$TEXT"
