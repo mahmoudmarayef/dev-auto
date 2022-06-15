@@ -48,11 +48,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: send custom message
-      uses: appleboy/telegram-action@master
+    - uses: haishanh/actions-telegram-notification@v1
+      if: ${{ always() }}
       with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: send photo message
-        photo: './tests/github.png'
-        document: './tests/gophercolor.png'
+        notification-token: ${{ secrets.TELEGRAM_TOKEN }}
+        job-status: ${{ job.status }}
 
