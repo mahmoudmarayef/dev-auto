@@ -43,13 +43,19 @@ jobs:
 
       - name: Build
         run: g++ hello.cpp -o app
-  
-  notifyTelegram:
-    runs-on: ubuntu-latest
-    steps:
-    - name: send custom message
-      uses: appleboy/telegram-action@master
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        job-status: ${{ job.status }}
+
+  notification:
+    name: Notify
+    runs-on: ubuntu-18.04
+    needs: [build]
+    if: always()
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Send message
+        uses: yamaks2306/telegram-notification@main
+        if: always()
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
