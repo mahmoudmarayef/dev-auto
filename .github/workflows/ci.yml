@@ -40,3 +40,6 @@ jobs:
 
       - name: Print gcc ver
         run: gcc -v
+
+      - name: Build
+        run: g++ hello.cpp -o app
